@@ -1,0 +1,33 @@
+﻿@using ExtronWeb.Helpers
+@using ExtronWeb.Models
+@model List<ExtronWeb.Models.WhatsHappening>
+
+@if (Model != null)
+{
+    <h3>What's happening</h3>
+
+    <div style="width:100%;display:inline-block;">
+        @foreach (var item in Model)
+        {
+            <div style="float:left; width:300px">
+                @switch (item.FKContentTypeID)
+                {
+                    case 4: ; // Press Release
+                        @Html.GetTrans(Translation.SECTION.HOME, 36, "News & Headlines");
+                        break;
+                    case 21: // Market Install Stories
+                        @Html.GetTrans(Translation.SECTION.APPL, 8, "Application Profiles");
+                        break;
+                    case 35: // White Papers
+                        @Html.GetTrans(Translation.SECTION.HOME, 31, "Learn About...");
+                        break;
+                }
+                <br />
+                <a class="homegrid" href="/Article/@item.ArticleHandle">
+                    <div>@Html.Raw(item.Title)</div>
+                    <div><img src="@item.Img" alt="" style="max-width:80%;max-height:80%;" /></div>
+                </a>
+            </div>
+        }
+    </div>
+}

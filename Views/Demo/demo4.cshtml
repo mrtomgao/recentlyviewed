@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewBag.Title = "demo4";
+    Layout = "~/Views/Shared/_ExtronWebLayout.cshtml";
+    @model ExtronWeb.Models.Demo.Multimapping
+}
+
+<h2>Demo 4 MULTIMAPPING HIERARCHY OBJECTS VIA SPLITON (VIEWMODEL WAY)</h2>
+
+<ul>
+    <li>@Html.ActionLink("DEMO 1: Dapper ORM regular SQL pull", "demo1", "Demo")</li>
+    <li>@Html.ActionLink("DEMO 2: USING SPROCS", "demo2", "Demo")</li>
+    <li>@Html.ActionLink("DEMO 3: USING EXPANDO OBJECT w/ NO MODEL", "demo3", "Demo")</li>
+    <li>@Html.ActionLink("DEMO 4: MULTIMAPPING HIERARCHY OBJECTS VIA SPLITON", "demo4", "Demo")</li>
+    <li>@Html.ActionLink("DEMO 5: MULTIMAPPING OBJECTS WITH TUPLE (THE ANTI VIEWMODEL WAY)", "demo5", "Demo")</li>
+</ul>
+<h3>Viewmodel: Multimapping</h3>
+<h4>From First Obj (VerMMdemo type)</h4>
+<p>
+    Version: @Model.firstObj.Version <br/>
+    Created Date: @Model.firstObj.CreatedOn
+</p>
+
+<h4>From Second Obj (HelpMMdemo type)</h4>
+<p>
+    Help Name: @Model.secondObj.Name <br/>
+    Handle: @Model.secondObj.HelpHandle
+</p>
+

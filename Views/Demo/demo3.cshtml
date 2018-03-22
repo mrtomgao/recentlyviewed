@@ -1,0 +1,33 @@
+﻿@{
+    ViewBag.Title = "demo3";
+    Layout = "~/Views/Shared/_ExtronWebLayout.cshtml";
+    @model dynamic 
+}
+
+<h2>Demo3 - DYNAMIC TYPE (EXPANDO OBJ)</h2>
+
+<ul>
+    <li>@Html.ActionLink("DEMO 1: Dapper ORM regular SQL pull", "demo1", "Demo")</li>
+    <li>@Html.ActionLink("DEMO 2: USING SPROCS", "demo2", "Demo")</li>
+    <li>@Html.ActionLink("DEMO 3: USING EXPANDO OBJECT w/ NO MODEL", "demo3", "Demo")</li>
+    <li>@Html.ActionLink("DEMO 4: MULTIMAPPING HIERARCHY OBJECTS VIA SPLITON", "demo4", "Demo")</li>
+    <li>@Html.ActionLink("DEMO 5: MULTIMAPPING OBJECTS WITH TUPLE (THE ANTI VIEWMODEL WAY)", "demo5", "Demo")</li>
+</ul>
+
+@foreach (var line in Model.HelpDocs)
+{
+    <p>
+        @* THERE IS NO STRONG TYPED MODEL. SO YOU JUST HAVE TO KNOW THE NAMES OF THE RETURNED COLUMNS AND PRAY THAT THEY MATCH!! 
+            i.e. I know for a fact that there is NAME, and HELPHANDLE returned in the query*@
+        @line.Name
+        @line.HelpHandle
+        
+    @* This last "whattheheck" does not match anything so it returns as null. *@
+        @line.whattheheck
+    </p>
+}
+
+Total Items: @Model.HelpDocs.Count
+
+
+

@@ -1,0 +1,48 @@
+﻿@{
+    ViewBag.Title = "Index";
+    ViewBag.Active = "Product";
+}
+
+<div>
+    Navigation: @Html.ActionLink("Index", "Index", "Product") | @Html.ActionLink("Protected", "Protected", "Product")
+</div>
+
+<h2>Product</h2>
+
+This is the product index page!
+
+<h3> Select a product...</h3>
+<table>
+    <tr>
+        <td>
+            <ul>
+                <li>@Html.ActionLink("cablecollarkit", "cablecollarkit", "Product")</li>
+                <li>@Html.ActionLink("hideawayhsa400", "hideawayhsa400", "Product")</li>
+                <li>@Html.ActionLink("cablecubby100", "cablecubby100", "Product")</li>
+                <li>@Html.ActionLink("xtpcp4kioboards", "xtpcp4kioboards", "Product")</li>
+                <li>@Html.ActionLink("xtpcphdmiioboards", "xtpcphdmiioboards", "Product")</li>
+                <li>@Html.ActionLink("retractorsm", "retractorsm", "Product")</li>
+                <li>@Html.ActionLink("ipltpcs4i", "ipltpcs4i", "Product")</li>
+                <li>@Html.ActionLink("cablecubby650ut", "cablecubby650ut", "Product")</li>
+                <li>@Html.ActionLink("studiostation", "studiostation", "Product")</li>
+            </ul>
+        </td>
+        <td>
+            <ul>
+                <li>@Html.ActionLink("entwine", "entwine", "Product")</li>
+                <li>@Html.ActionLink("rcp101", "rcp101", "Product")</li>
+                <li>@Html.ActionLink("smd202", "smd202", "Product")</li>
+                <li>@Html.ActionLink("ebp200", "ebp200", "Product")</li>
+                <li>@Html.ActionLink("vnmatrix250", "vnmatrix250", "Product")</li>
+                <li>@Html.ActionLink("tlppro1720mg", "tlppro1720mg", "Product")</li>
+                <li>@Html.ActionLink("vns104", "vns104", "Product")</li>
+                <li>@Html.ActionLink("tlppro320c", "tlppro320c", "Product")</li>
+                <li>@Html.ActionLink("focamm", "focamm", "Product")</li>
+            </ul>
+        </td>
+    </tr>
+</table>
+
+
+@{ Html.RenderAction("Index", "RecentlyViewed"); }
+

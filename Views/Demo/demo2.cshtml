@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewBag.Title = "demo2";
+    Layout = "~/Views/Shared/_ExtronWebLayout.cshtml";
+    @model List<ExtronWeb.Models.Demo.Sprockly>
+}
+
+<h2>Demo2 - SPROC to Model</h2>
+
+<ul>
+    <li>@Html.ActionLink("DEMO 1: Dapper ORM regular SQL pull", "demo1", "Demo")</li>
+    <li>@Html.ActionLink("DEMO 2: USING SPROCS", "demo2", "Demo")</li>
+    <li>@Html.ActionLink("DEMO 3: USING EXPANDO OBJECT w/ NO MODEL", "demo3", "Demo")</li>
+    <li>@Html.ActionLink("DEMO 4: MULTIMAPPING HIERARCHY OBJECTS VIA SPLITON", "demo4", "Demo")</li>
+    <li>@Html.ActionLink("DEMO 5: MULTIMAPPING OBJECTS WITH TUPLE (THE ANTI VIEWMODEL WAY)", "demo5", "Demo")</li>
+</ul>
+
+
+@foreach (var line in Model)
+{
+    <p>
+        @line.Title
+        @line.Sort
+    </p>
+}
+
+item count: @Model.Count()
+
+

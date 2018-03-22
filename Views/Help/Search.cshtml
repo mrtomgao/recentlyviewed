@@ -1,0 +1,87 @@
+﻿@{
+    ViewBag.Title = "Search";
+    Layout = "~/Views/Shared/_ExtronWebLayout.cshtml";
+    @model ExtronWeb.Models.Help.SearchViewModel
+    string resultURL = "";
+}
+
+@using (Html.BeginForm("Search", "Help", FormMethod.Get))
+{
+    <div id="divLoading" style="color:red;width:200px;background-color:yellow;font-size:larger;display:none;position:absolute;">Loading ....</div>
+    <section class="help-search">
+        <div class="container">
+            <div class="help-title">@ViewBag.SearchTitle</div>
+            <div class="search-help-container">
+                <div class="search-help">
+                    <i class="fa fa-search"></i>
+                    <input type="hidden" id="version" name="version" value="@ViewBag.SelectedVersion" />
+                    <input type="text" id="keyword" name="keyword" class="form-control" placeholder="@ViewBag.Keyword" />
+                </div>
+            </div>
+        </div>
+    </section>
+}
+    <section class="breadcrumb-section">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li><a href="/Help">Help</a></li>
+                @if (Model.SelectedHelp != null)
+                {
+                    <li><a href="/Help/@Model.SelectedHelp.HelpHandle?v=@Model.SelectedVersion.PKVersionID">@Model.SelectedHelp.Name v. @Model.SelectedVersion.Version</a></li>
+                }
+
+                <li class="active">Search results</li>
+            </ol>
+        </div>
+    </section>
+
+    <section style="padding-top:30px;" class="js-helpproductlisting">
+        <div id="resultList" class="container" style="position:relative;">
+
+            <h2 class="help-result-title">@Model.Results.Count() results for "@ViewBag.Keyword"</h2>
+
+            @foreach (var line in Model.Results)
+            {
+                if (line.TypeRank == 0)
+                {
+                    resultURL = "/help/" + line.HelpHandle + "?v=" + line.PKVersionID;
+                }
+                else
+                {
+                    resultURL = resultURL = "/help/" + line.HelpHandle + "/" + line.PKHelpContentsID;
+                }
+
+                <a class="search-item" href="@resultURL">
+                    <i class="fa fa fa-file-text-o icon"></i>
+                    <div class="search-item-product">@line.HelpName <text>v</text>@line.Version</div>
+                    <div class="search-item-title">@line.Title </div>
+                    <div class="search-item-desc">@Html.Raw(line.Highlight)</div>
+                </a>
+            }
+
+            <nav aria-label="Page navigation" class="text-center">
+                <ul class="pagination">
+                    <li>
+                        <a href="#" aria-label="Previous">
+                            <span aria-hidden="true" style="border-bottom:0;">&laquo;</span>
+                        </a>
+                    </li>
+                    <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">4</a></li>
+                    <li><a href="#">5</a></li>
+                    <li><a href="#">6</a></li>
+                    <li><a href="#">7</a></li>
+                    <li><a href="#">8</a></li>
+                    <li>
+                        <a href="#" aria-label="Next">
+                            <span aria-hidden="true" style="border-bottom:0;">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+        </div><!--/container-->
+    </section>
+

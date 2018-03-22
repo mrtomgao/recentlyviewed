@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewBag.Title = "Selected";
+    Layout = "~/Views/Shared/_ExtronWebLayout.cshtml";
+    @model ExtronWeb.Models.Product.ProductEntity 
+}
+
+<h2>@Model.Name</h2>
+<h3>@Model.SubTitle</h3>
+<img src="@Html.Raw("/media/img/product/img-md/" + @Model.FileHandle + ".jpg")" />
+<ul>
+    <li>@Model.ProdID</li>
+    <li>@Model.FileHandle</li>
+    <li>@Model.ProdStatus</li>
+    <li>@Html.Raw(Model.DescriptionA)</li>
+    <li>@Html.Raw(Model.DescriptionB)</li>
+    <li>@Html.Raw(@Model.Specs)</li>
+    <li>@Html.Raw(@Model.Comments)</li>
+    <li>@Model.ProdType</li>
+    <li>@Model.ProdTypeDesc</li>
+    <li>@Model.SubType</li>
+    <li>@Model.SubTypeDesc</li>
+    <li>@Model.Title</li>
+    <li>@Model.MetaDescription</li>
+    <li>@Model.MetaKeywords</li>
+    <li>@Model.EnglishName</li>
+</ul>
+
+

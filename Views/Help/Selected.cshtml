@@ -1,0 +1,189 @@
+﻿@{
+    Layout = "~/Views/Shared/_ExtronWebLayout.cshtml";
+    @model ExtronWeb.Models.Help.SelectedViewModel
+    ViewBag.Title = "Selected";
+}
+
+@using (Html.BeginForm("Search", "Help", FormMethod.Get))
+{    
+    <section class="help-search">
+        <div class="container">
+            <div class="help-title">@Model.SelectedHelp.Name</div>
+            <div class="search-help-container">
+                <div class="search-help">
+                    <i class="fa fa-search"></i>
+                    <input type="hidden" id="version" name="version" value="@Model.SelectedVersion.PKVersionID"/>                    
+                    <input type="text" id="keyword" name="keyword" class="form-control" placeholder="Search @Model.SelectedHelp.Name Support" />
+                </div>
+            </div>
+        </div>
+    </section>
+}
+
+    <section class="breadcrumb-section">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li><a href="~/">Home</a></li>
+                <li><a href="~/Help">Help</a></li>
+                <li class="active">@Model.SelectedHelp.Name v. @Model.SelectedVersion.Version</li>
+            </ol>
+        </div>
+
+    </section>
+
+    <section style="padding-top:10px;">
+        <div class="container">
+            <div class="dropdown version">
+                <button class="btn dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    Version @Model.SelectedVersion.Version
+                    <span class="caret"></span>
+                </button>
+
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                    @foreach (var otherVersionItem in Model.OtherVersions)
+                    {
+                        if (otherVersionItem.PKVersionID != Model.SelectedVersion.PKVersionID)
+                        {
+                            <li><a href="@Model.SelectedHelp.HelpHandle?v=@otherVersionItem.PKVersionID">Version @otherVersionItem.Version </a></li>
+                        }
+                    }
+
+                </ul>
+            </div>
+            <div class="row">
+                <div class="col-md-offset-2 col-md-8 col-md-offset-2">
+                    <h5 class="text-center addmarginbottom-double" style="text-transform:uppercase; margin-top:30px;">Browse for help categories</h5>
+                    <div class="panel-group" id="accordion">
+                        <div class="panel panel-default">
+                            @{
+                                int i = 1;
+                                int count = 0;
+                                string currentParent = "";
+                                int? childOf;
+                                bool childOpen = false;
+                                
+                            }
+
+                            @foreach (var item in Model.OuterTOC)
+                            {
+                                childOf = item.FKParentContentsID;
+
+                                if (item.HierarchyLevel == 0)
+                                {
+                                    if (childOpen == true)
+                                    {
+                                        @Html.Raw("</li></ul></div></div>");
+                                        childOpen = false;
+                                    }
+
+                                    @Html.Raw("<a class='panel-heading accordion-toggle' href='#collapse" + i + "' data-toggle='collapse' data-parent='#accordion'>");
+                                        <h4 class='panel-title'>@item.Title</h4>
+                                    @Html.Raw("</a>");
+                                    currentParent = item.PKHelpContentsID.ToString();
+
+                                    if (item.PKHelpTopicID != null)
+                                    {
+                                        item.HierarchyLevel = 1;
+                                    }
+
+                                    i++;
+                                }
+
+                                if (item.HierarchyLevel == 1)
+                                {
+                                    if (childOpen == false)
+                                    {
+                                        @Html.Raw("<div id='collapse" + (i - 1) + "' class='panel-collapse collapse'><div class='panel-body'><ul>");
+                                        childOpen = true;
+                                    }
+
+                                    @Html.Raw("<li><a href='/Help/" + Model.SelectedHelp.HelpHandle + "/" + item.PKHelpContentsID  + "'>" + item.Title + "</a></li>");
+
+                                }
+
+                                if (count == Model.OuterTOC.Count())
+                                {
+                                    @Html.Raw("</ul></div></div>");
+                                    childOpen = false;
+                                }
+
+                                count++;
+
+                            }
+                        </div><!--/panel-default-->
+                    </div>
+                </div>
+
+            </div>
+
+        </div> <!-- end container -->
+
+
+    </section>
+
+    <section class="greyBG">
+        <div class="container">
+            <h2 class="section-heading">Related Videos</h2>
+            <div class="ui link cards basic five card-noBorder">
+                <a class="card" href="#">
+                    <div class="image">
+                        <img src="@Url.Content("~/Content/img/Help/img.png")" alt="">
+                    </div>
+                    <div class="content">
+                        <div class="header">Lorem ipsum</div>
+                        <div class="description">
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                        </div>
+                    </div>
+                </a>
+                <a class="card" href="#">
+                    <div class="image">
+                        <img src="@Url.Content("~/Content/img/Help/img.png")" alt="">
+                    </div>
+                    <div class="content">
+                        <div class="header">Lorem ipsum</div>
+                        <div class="description">
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                        </div>
+                    </div>
+                </a>
+                <a class="card" href="#">
+                    <div class="image">
+                        <img src="@Url.Content("~/Content/img/Help/img.png")" alt="">
+                    </div>
+                    <div class="content">
+                        <div class="header">Lorem ipsum</div>
+                        <div class="description">
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                        </div>
+                    </div>
+                </a>
+                <a class="card" href="#">
+                    <div class="image">
+                        <img src="@Url.Content("~/Content/img/Help/img.png")" alt="">
+                    </div>
+                    <div class="content">
+                        <div class="header">Lorem ipsum</div>
+                        <div class="description">
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                        </div>
+                    </div>
+                </a>
+                <a class="card" href="#">
+                    <div class="image">
+                        <img src="@Url.Content("~/Content/img/Help/img.png")" alt="">
+                    </div>
+                    <div class="content">
+                        <div class="header">Lorem ipsum</div>
+                        <div class="description">
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+
+
+

@@ -1,0 +1,174 @@
+﻿@{
+    Layout = "~/Views/Shared/_ExtronWebLayout.cshtml";
+    ViewBag.Active = "Help";
+    @model List<ExtronWeb.Models.Help.Help.HelpEntity>
+}
+
+@using (Html.BeginForm("Search", "Help", FormMethod.Get))
+{    
+    <section class="help-search">
+        <div class="container">
+            <div class="help-title">How can we help you?</div>
+            <div class="search-help-container">
+                <div class="search-help">
+                    <i class="fa fa-search"></i>                    
+                    <input type="text" id="keyword" name="keyword" class="form-control" placeholder="Search Knowledgebase" />
+                </div>
+            </div>
+        </div>
+    </section>
+}
+
+<section style="padding-top:30px;" class="js-helpproductlisting">
+    <div class="container" style="position:relative;">
+
+        <h2 class="section-heading">Select your product</h2>
+        <!-- <a href="#" class="search-partnum">Enter Part Number</a> -->
+        <div class="ui link cards basic six">
+
+            @{int i = 1; var c = "card";}
+            @foreach (var line in Model)
+            {
+                if (i > 6)
+                {
+                    c = "card js-more-card js-hide";
+                }
+
+                <a class="@c" href="~/Help/@line.HelpHandle">
+                    <div class="image">
+                        <img src="~/Content/img/help/product-thumb.png" alt="">
+                    </div>
+                    <div class="content">
+                        <div class="product-title">@line.Name</div>
+                    </div>
+                </a>
+
+                i++;
+            }
+
+        </div>
+        <div class="more-product text-center js-more">
+            <span>Show more products</span>
+            <i class="fa  fa-angle-down"></i>
+        </div>
+        <div class="more-product text-center js-less js-hide">
+            <i class="fa  fa-angle-up"></i>
+            <span>Show less products</span>
+        </div>
+    </div><!--/container-->
+</section>
+
+
+<section class="greyBG">
+    <div class="container">
+        <h2 class="section-heading">Tech Library</h2>
+        <div class="row">
+            <div class="col-md-4 text-center">
+                <div class="col-padding-lr">
+                    <div><img src="~/Content/img/Help/video-icon.svg" class="img-lg"></div>
+                    <h3>Videos</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Non incidunt natus voluptatibus reiciendis, commodi dolorem voluptate facere mollitia repellat aperiam</p>
+                </div>
+            </div>
+            <div class="col-md-4 text-center">
+                <div class="col-padding-lr">
+                    <div><img src="~/Content/img/Help/whitepaper-icon.svg" class="img-lg"></div>
+                    <h3>White Papers</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Non incidunt natus voluptatibus reiciendis, commodi dolorem voluptate facere mollitia repellat aperiam</p>
+                </div>
+            </div>
+            <div class="col-md-4 text-center">
+                <div class="col-padding-lr">
+                    <div><img src="~/Content/img/Help/technical-article.svg" class="img-lg"></div>
+                    <h3>Technical Articles</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Non incidunt natus voluptatibus reiciendis, commodi dolorem voluptate facere mollitia repellat aperiam</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="container">
+        <h2 class="section-heading">Technologies</h2>
+        <div class="ui link cards basic four card-noBorder">
+            <a class="card" href="#">
+                <div class="image">
+                    <img src="~/Content/img/Help/img.png" alt="">
+                </div>
+                <div class="content">
+                    <div class="header">Digital Video</div>
+                    <div class="description">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    </div>
+                </div>
+            </a>
+            <a class="card" href="#">
+                <div class="image">
+                    <img src="~/Content/img/Help/img.png" alt="">
+                </div>
+                <div class="content">
+                    <div class="header">Control</div>
+                    <div class="description">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    </div>
+                </div>
+            </a>
+            <a class="card" href="#">
+                <div class="image">
+                    <img src="~/Content/img/Help/img.png" alt="">
+                </div>
+                <div class="content">
+                    <div class="header">Audio</div>
+                    <div class="description">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    </div>
+                </div>
+            </a>
+            <a class="card" href="#">
+                <div class="image">
+                    <img src="~/Content/img/Help/img.png" alt="">
+                </div>
+                <div class="content">
+                    <div class="header">AV Streaming</div>
+                    <div class="description">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    </div>
+                </div>
+            </a>
+            <a class="card" href="#">
+                <div class="image">
+                    <img src="~/Content/img/Help/img.png" alt="">
+                </div>
+                <div class="content">
+                    <div class="header">Fiber Optics</div>
+                    <div class="description">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    </div>
+                </div>
+            </a>
+            <a class="card" href="#">
+                <div class="image">
+                    <img src="~/Content/img/Help/img.png" alt="">
+                </div>
+                <div class="content">
+                    <div class="header">Twister Pair</div>
+                    <div class="description">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    </div>
+                </div>
+            </a>
+            <a class="card" href="#">
+                <div class="image">
+                    <img src="~/Content/img/Help/img.png" alt="">
+                </div>
+                <div class="content">
+                    <div class="header">Signal Processing</div>
+                    <div class="description">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</section>

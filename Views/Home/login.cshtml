@@ -1,0 +1,73 @@
+﻿@using ExtronWeb.Models
+@{
+    ViewBag.Title = "login";
+    Layout = "~/Views/Shared/_ExtronWebLayout.cshtml";
+    @model ExtronWeb.Models.Insider.InsiderEntity
+}
+
+<h2>Logged in test demo</h2>
+
+@Html.ActionLink("click here to logout...", "Logout", "Home")
+<h3>@Model.Email</h3>
+<div>
+    <table class="table table-bordered table-striped">
+        <tr><td colspan="2"><strong>ExtronWeb.Models.CurrentUser</strong></td></tr>
+        <tr><td>Current Language</td><td>@CurrentUser.Language, @((int)CurrentUser.Language)</td></tr>
+        <tr><td>Current User Region</td><td>@CurrentUser.UserRegion, @((int)CurrentUser.UserRegion)</td></tr>
+    </table>
+</div>
+
+<div>
+    <table id="idAPIValues" class="table table-bordered table-striped">
+        <tr><td colspan="2"><strong>ExtronWeb.Controllers.api.v1</strong></td></tr>
+    </table>
+</div>
+<div>
+    <table class="table table-bordered table-striped">
+        <tr><td colspan="2"><strong>ExtronWeb.Models.InsiderExtension</strong></td></tr>
+        <tr><td>Can View Pricing</td><td>@Model.CanViewPricing()</td></tr>
+        <tr><td>Can View Ed Contract Pricing</td><td>@Model.CanViewEdContractPricing()</td></tr>
+        <tr><td>Default Home</td><td>@Model.GetDefaultHome()</td></tr>
+        <tr><td>Login Type</td><td>@Model.GetLoginType()</td></tr>
+        <tr><td>Full Name</td><td>@Model.GetFullName()</td></tr>
+        <tr><td>Full Address</td><td>@Model.GetFullAddress()</td></tr>
+        <tr><td>Company No</td><td>@Model.GetCompanyNo()</td></tr>
+        <tr><td>City State Zip</td><td>@Model.GetCityStateZip()</td></tr>
+        <tr><td>Address Label</td><td>@Html.Raw(Model.GetAddressLabel())</td></tr>
+        <tr><td>Billing Account</td><td>@Model.GetBillToAccount()</td></tr>
+        <tr><td>Billing City State Zip</td><td>@Model.GetBillingCityStateZip()</td></tr>
+        <tr><td>Billing Address Label</td><td>@Html.Raw(Model.GetBillingAddressLabel())</td></tr>
+        <tr><td>Price Class Desc</td><td>@Model.GetPriceClassDescription()</td></tr>
+        <tr><td>Price List</td><td>@Model.GetPriceList()</td></tr>
+        <tr><td>Pricing Access</td><td>@Model.GetPricingAccess()</td></tr>
+        <tr><td>Override Price List</td><td>@Model.OverridePriceList()</td></tr>
+        <tr><td>Support Email</td><td>@Model.GetSupportEmail()</td></tr>
+        <tr class="danger"><td>User Roles</td><td>@Model.GetUserRoles()</td></tr>
+        <tr><td>Has MSRP Pricing Exception</td><td>@Model.HasMsrpPricingException()</td></tr>
+        <tr><td>Is Consultant</td><td>@Model.IsConsultant()</td></tr>
+        <tr><td>Is Educator K12</td><td>@Model.IsEducatorK12()</td></tr>
+        <tr><td>Is Educator Uni</td><td>@Model.IsEducatorUniv()</td></tr>
+        <tr><td>Is MSRP Only</td><td>@Model.IsMSRPOnly()</td></tr>
+        <tr><td>Is Programmer</td><td>@Model.IsProgrammer()</td></tr>
+        <tr><td>Is Vertical Market Integrator</td><td>@Model.IsVerticalMarketIntegrator()</td></tr>
+    </table>
+
+</div>
+
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            url: "/api/v1/Insider/",
+            success: function (result) {
+                for (key in result) {
+                    $('#idAPIValues').append("<tr><td>" + key + "</td><td>" + result[key] + "</td><tr>");
+                }
+            }
+        })
+    });
+</script>
+
+
+
+
+

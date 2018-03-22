@@ -1,0 +1,34 @@
+﻿
+@{
+    ViewBag.Title = "demo5";
+    Layout = "~/Views/Shared/_ExtronWebLayout.cshtml";
+    @model Tuple<ExtronWeb.Models.Demo.Multimapping.VerMMdemo, ExtronWeb.Models.Demo.HelpDemo, ExtronWeb.Models.Help.Help.HelpEntity>
+}
+
+<h2>Demo 5 MULTIMAPPING OBJECTS WITH TUPLE (THE ANTI VIEWMODEL WAY)</h2>
+
+<ul>
+    <li>@Html.ActionLink("DEMO 1: Dapper ORM regular SQL pull", "demo1", "Demo")</li>
+    <li>@Html.ActionLink("DEMO 2: USING SPROCS", "demo2", "Demo")</li>
+    <li>@Html.ActionLink("DEMO 3: USING EXPANDO OBJECT w/ NO MODEL", "demo3", "Demo")</li>
+    <li>@Html.ActionLink("DEMO 4: MULTIMAPPING HIERARCHY OBJECTS VIA SPLITON", "demo4", "Demo")</li>
+    <li>@Html.ActionLink("DEMO 5: MULTIMAPPING OBJECTS WITH TUPLE (THE ANTI VIEWMODEL WAY)", "demo5", "Demo")</li>
+</ul>
+<h3>No Viewmodel :thisisfine:</h3><br/>
+<h4>From Tupled Item1 (Multimapping.VerMMdemo type)</h4>
+<p>
+    Version: @Model.Item1.Version <br />
+    Created Date: @Model.Item1.CreatedOn
+</p>
+
+<h4>From Tupled Item2 (HelpDemo type)</h4>
+<p>
+    Help Name: @Model.Item2.Name <br />
+    Handle: @Model.Item2.HelpHandle
+</p>
+
+<h4>From Tupled Item3 (Help.HelpEntity type)</h4>
+<p>
+    FK File Handle: @Model.Item3.FKFileHandle  <br />
+    List Order: @Model.Item3.ListOrder 
+</p>

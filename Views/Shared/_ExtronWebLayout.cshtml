@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Extron | Home</title>
+
+    @Styles.Render("~/Content/Styles")
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.16.0/jquery.validate.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://use.fontawesome.com/d478807252.js"></script>
+    @Scripts.Render("~/Content/Scripts")
+
+    <style type="text/css">
+        .expand-nav {
+            background-color: transparent !important;
+            border: 0;
+            font-size: 24px;
+            border-radius: 0;
+            color: rgba(255,255,255,.5);
+            margin-left: 20px;
+            margin-top: 5px;
+        }
+
+            .expand-nav:hover {
+                background-color: transparent !important;
+                border: 0;
+                font-size: 24px;
+                border-radius: 0;
+                color: rgba(255,255,255,1);
+                margin-left: 20px;
+                margin-top: 5px;
+            }
+    </style>
+
+    <script>
+        $(document).ready(function () {
+            $('.js-more').on('click', function () {
+                $('.card.js-hide').removeClass('js-hide');
+                $('html,body').stop().animate({
+                    scrollTop: $(".more-product").offset().top - 700
+                });
+                $('.js-more').addClass('js-hide');
+                $('.js-less').removeClass('js-hide');
+            })
+            $('.js-less').on('click', function () {
+                $('.js-more-card').addClass('js-hide');
+                $('html,body').stop().animate({
+                    scrollTop: $(".more-product").offset().top - 300
+                });
+                $('.js-less').addClass('js-hide');
+                $('.js-more').removeClass('js-hide');
+            })
+            $('#search-help').keypress(function (e) {
+                var str = $('#search-help').val();
+                var domain = "http://dev.extron.com";
+                var url = domain + "/mockups/help/search-result1.html?search=" + str;
+                if (e.keyCode == 13) {
+                    location.href = url;
+                }
+            });
+        });
+    </script>
+
+</head>
+<body>
+
+    @Html.Partial("_ExtronHeader")
+
+    @RenderBody()
+
+    @Html.Partial("_ExtronFooter")
+
+</body>
+</html>

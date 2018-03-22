@@ -1,0 +1,23 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    ViewBag.Active = "Home";
+    Layout = "~/Views/Shared/_ExtronWebLayout.cshtml";
+}
+
+<h2>Home</h2>
+<div>
+    <h3>Navigation:</h3>
+    <ul>
+        <li>@Html.ActionLink("go to Product", "Index", "Product")</li>
+        <li>@Html.ActionLink("Test Product Pricing", "PriceTest", "Product")</li>
+        <li>@Html.ActionLink("go to Help", "Index", "Help")</li>
+        <li>@Html.ActionLink("Dapper ORM demo", "demo1", "Demo")</li>
+        <li>@Html.ActionLink("Logged in test demo", "Login", "Home")</li>
+    </ul>
+    @{ Html.RenderAction("Index", "WhatsHappening"); }
+    @{ Html.RenderAction("EmbeddedArticle", "Article", new { articlehandle = "yjchentest3" }); }
+</div>
+
+@{ Html.RenderAction("Index", "RecentlyViewed"); }
+

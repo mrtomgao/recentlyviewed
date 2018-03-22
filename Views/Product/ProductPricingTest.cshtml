@@ -1,0 +1,33 @@
+﻿@using ExtronWeb.Models;
+
+@model Price.AvantePricingEntity
+
+<div>
+    <div>
+        <input id="idPartnum" type="text" placeholder="Enter Part Number"/>
+        <button id="idSubmit" class="btn btn-default">Get Pricing</button>
+    </div>
+    <div>
+        <p><strong>Your Price:</strong> <span id="idYourPrice"></span></p>
+        <p><strong>MSRP:</strong> <span id="idMSRP"></span></p>
+    </div>
+    
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#idSubmit').on('click', function (e) {
+            if ($('#idPartnum').val() != "") {
+                var part = $('#idPartnum').val().trim();
+                $.ajax({
+                    url: "/api/v1/Product/Pricing/" + part,
+                    success: function (result) {
+                        $('#idYourPrice').text(result.YourPrice);
+                        $('#idMSRP').text(result.MSRP);
+                    }
+                })
+            }
+        });
+    });
+</script>
+

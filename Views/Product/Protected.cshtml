@@ -1,0 +1,83 @@
+﻿
+@{
+    ViewBag.Title = "Protected";
+}
+
+<h2>Protected</h2>
+
+<p>This is the protected view!</p>
+
+<div class="example-box">
+    <h2>Get Product via WebAPI ajax</h2>
+    <p>
+        This ajax example retrieves data from the WebAPI exposed via extron.com/api
+    </p>
+    <input id="idProductAjaxPartNum" type="text" value="60-415-01" />
+    <button id="idProductAjaxRequest" onclick="AjaxCall()">Get Product - Ajax</button>
+    <div id="idProductAjaxResult"></div>
+</div>
+
+<div class="example-box">
+    <h2>Get Product via MVC action</h2>
+    <p>
+        This also uses ajax, but retrieves data from an ActionResult from the Product
+        Controller routed via /product/get
+    </p>
+    <input id="idProductMVCPartNum" type="text" value="60-415-01" />
+    <button id="idProductMVCRequest" onclick="MVCCall()">Get Product - MVC</button>
+    <div id="idProductMVCActionResult"></div>
+</div>
+
+<div style="clear:both; margin-bottom:10px;"></div>
+
+<div class="example-box">
+    <h2>Get Current Insider via WebAPI ajax</h2>
+    <button onclick="GetCurrentIdentity()">Get Insider Profile</button>
+    <div id="idCurrentIdentity"></div>
+</div>
+
+<div style="clear:both; margin-bottom:10px;"></div>
+
+<style type="text/css">
+    .example-box {
+        border: 1px solid black;
+        width: 600px;
+        min-height: 400px;
+        float: left;
+        margin: 10px;
+        padding: 5px;
+        word-wrap:break-word;
+    }
+</style>
+<script src="~/Scripts/jquery-1.11.1.min.js"></script>
+<script type="text/javascript">
+    function AjaxCall() {
+        $.ajax({
+            url: "/api/v1/product/" + $('#idProductAjaxPartNum').val(),
+            method: 'GET',
+            dataType: 'json',
+            success: function (result) {
+                $('#idProductAjaxResult').text(JSON.stringify(result));
+            }
+        });
+    }
+
+    function MVCCall() {
+        $.ajax({
+            url: "/Product/Get/" + $('#idProductMVCPartNum').val(),
+            success: function (result) {
+                $('#idProductMVCActionResult').text(result);
+            }
+        });
+    }
+
+
+    function GetCurrentIdentity() {
+        $.ajax({
+            url: "/api/v1/Insider/",
+            success: function (result) {
+                $('#idCurrentIdentity').text(JSON.stringify(result));
+            }
+        });
+    }
+</script>

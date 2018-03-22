@@ -1,0 +1,12 @@
+﻿@model ExtronWeb.Models.Article.ArticleEntity
+
+@if (Model != null)
+{
+    <div>
+        @if (@Model.NoTitle == 0)
+        {<h2>@Model.Title</h2>}
+
+        @Html.Raw(@Model.Body)
+    </div>
+}
+

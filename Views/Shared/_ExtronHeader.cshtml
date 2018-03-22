@@ -1,0 +1,121 @@
+﻿@using ExtronWeb.Models
+@using ExtronWeb.Helpers
+
+<header id="header">
+    <div class="header-general">
+        <div class="container">
+            <div class="pull-left">
+                <a href="~/" class="logo"></a>
+            </div>
+            <div class="header-contact">
+                <div class="text">S3 Support Hotline</div>
+                <div class="number">800.633.9876</div>
+                <ul class="pfile">
+                    @if (Request.IsAuthenticated)
+                    {
+                        <li class="dropdown-popover">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" id="callUs" data-toggle="popover" data-placement="bottom" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-phone"></i> Contact Us
+                                <i class="fa fa-caret-down" aria-hidden="true"></i>
+                            </a>
+                            <div id="popover-content-callUs" class="hide">
+                                <ul class="popover-dropdown-menu">
+                                    @if (CurrentUser.UserRegion == Constants.USER_REGION.USA)
+                                    {
+                                        <li><a class="dropdown-item" href="#">Order Support: 800.633.9873</a></li>
+                                        <li><a class="dropdown-item" href="#">Control Systems Support Hotline: 800.633.9877</a></li>
+                                    }
+                                    else
+                                    {
+                                        <li><a class="dropdown-item" href="#">@CurrentUser.GetExtronContactPhone()</a></li>
+                                    }
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="hidden-xs">|</li>
+                        <li class="hidden-xs"><a href="">@Html.GetTrans(Translation.SECTION.DEALER, 128, "My Favorites")</a></li>
+                        <li class="hidden-xs">|</li>
+                        <li class="dropdown-popover">
+                            <a data-toggle="popover" data-placement="bottom" data-container=".pfile" data-content="" id="account">My Account<i class="fa fa-caret-down" aria-hidden="true"></i></a>
+                            <div id="popover-content-account" class="hide">
+                                <ul class="popover-dropdown-menu">
+                                    <li class="visible-xs"><a href="#">@Html.GetTrans(Translation.SECTION.DEALER, 128, "My Favorites")</a></li>
+                                    <li class="visible-xs"><a href="#">@Html.GetTrans(Translation.SECTION.DEALER, 26, "Shopping Cart")</a></li>
+                                    <li><a href="#">@Html.GetTrans(Translation.SECTION.DEALER, 13, "Preferences")</a></li>
+                                    <li><a href="#">@Html.GetTrans(Translation.SECTION.DEALER, 14, "Change Password")</a></li>
+                                    <li><a href="#">@Html.GetTrans(Translation.SECTION.DEALER, 49, "Extron Insider Policies")</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="/Logout">@Html.GetTrans(Translation.SECTION.GLOBALS, 20, "Log out")</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="hidden-xs">|</li>
+                        <li class="hidden-xs"><a href="">@Html.GetTrans(Translation.SECTION.DEALER, 26, "Shopping Cart")</a></li>
+                        <li class="visible-header-fixed-up">|</li>
+                    }
+                    else
+                    {
+                        <li class="hidden-xs"><a href="/Login">@Html.GetTrans(Translation.SECTION.GLOBALS, 7, "Log in")</a></li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-inverse">
+        <div class="container">
+            <div class="row navbar-element">
+                <div class="col-xs-12 col-md-4 col-md-push-8">
+                    <div class="navbar-fixedup-element">
+                        <div class="navbar-fixedup-element-row">
+                            <div>
+                                <!-- mobile-logo -->
+                                <a href="index.aspx" class="logo"></a>
+                            </div>
+                            <!-- search box for large screen -->
+                            <div class="nav-form">
+                                <div class="form-group navbar-form-xs-hide">
+                                    <!-- search box for large screen -->
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" placeholder="" title="Search Extron.com" id="inputSearch" aria-describedby="inputSearch">
+                                        <div class="input-group-addon cursor-pointer"><span class="fa fa-search"></span></div>
+                                    </div>
+                                    <label class="sr-only" for="inputSearchExtron">Search Extron.com</label>
+                                </div>
+                                <!-- search box for small screen -->
+                                <div class="navbar-form-xs-show">
+                                    <a class="btn btn-has-search" role="button" data-toggle="collapse" href="#collapseSearchbox" aria-expanded="false" aria-controls="collapseSearchbox">
+                                        <span id="inputSearchStatus" class="sr-only">(search)</span>
+                                    </a>
+                                </div>
+                            </div>
+                            <!-- nav-toggle -->
+                            <div>
+                                <div class="nav-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                                    <div class="nav-toggle-contour"></div>
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- /row navbar-element -->
+                </div>
+                <div class="col-xs-12 col-md-8 col-md-pull-4">
+                    <div id="navbar" class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav">
+                            <li @(ViewBag.Active == "Product" ? "class=active" : "")><a href="~/Product">Products</a></li>
+                            <li><a href="#">Training</a></li>
+                            <li><a href="#">Tools</a></li>
+                            <li @(ViewBag.Active == "Help" ? "class=active" : "")><a href="~/Help">Help</a></li>
+                            <li><a href="company.aspx">Company</a></li>
+                            <li><a href="#">Download</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div><!-- /row -->
+        </div>
+    </nav>
+</header>

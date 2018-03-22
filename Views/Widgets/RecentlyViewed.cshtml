@@ -1,0 +1,41 @@
+﻿@model List<ExtronWeb.Models.RecentlyViewed.RecentlyViewedProduct>
+
+<div id="showRecent">
+    @if (Model != null)
+    {
+        <h3>
+            Recently Viewed:
+            @Ajax.ActionLink("[Remove all]", "Clear", "RecentlyViewed", null,
+                new AjaxOptions
+                {
+                    HttpMethod = "POST",
+                    UpdateTargetId = "showRecent",
+                    InsertionMode = InsertionMode.Replace
+                })
+        </h3>
+
+        int i = 0;
+        foreach (var line in Model)
+        {
+            if (line != null)
+            {
+                <figure style="display:inline-block; width: 150px;">
+                    <a href="/Product/@line.FileHandle"><img src="@line.Thumbnail" /><figcaption>@line.Name</figcaption></a>
+                    <span style="font-size: x-small">@line.SubTitle</span>
+                    <span style="font-size: x-small">Viewed: @line.TimeAgo</span>
+                    @Ajax.ActionLink("[remove]", "Clear", "RecentlyViewed", new { index = i },
+                        new AjaxOptions
+                        {
+                            HttpMethod = "POST",
+                            UpdateTargetId = "showRecent",
+                            InsertionMode = InsertionMode.Replace
+                        })
+                </figure>
+                i++;
+            }
+        }
+
+    }
+</div>
+
+

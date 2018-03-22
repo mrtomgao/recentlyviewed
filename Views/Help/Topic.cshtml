@@ -1,0 +1,228 @@
+﻿@{
+    @model ExtronWeb.Models.Help.TopicViewModel
+    Layout = "~/Views/Shared/_ExtronWebLayout.cshtml";
+}
+    <section class="breadcrumb-section">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li><a href="#">Home</a></li>
+                <li><a href="~/Help/">Help</a></li>
+                <li><a href="~/Help/@Model.SelectedHelp.HelpHandle?v=@Model.SelectedVersion.PKVersionID">@Model.SelectedHelp.Name v. @Model.SelectedVersion.Version</a></li>
+                <li class="active">@Model.InnerTOC[0].Title</li>
+            </ol>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="row">
+
+            <div class="col-sm-8">
+                <div class="help-article">
+                    <h1 MadCap:conditions="Default.ScreenOnly"><a name=""></a>@Model.SelectedTitle.Title</h1>
+
+                    @Html.Raw(Model.SelectedTopic.Body)
+
+                    <!-- The loading-area will be where we display a message during the AJAX call.
+                    This way, the user knows something is happening in the background.-->
+                    <div id="loading-area" class="load" style="display:none;">
+                        <div class='alert alert-info'><strong>Sending...</strong></div>
+                    </div>
+
+                    <!-- The message-area will be where we display a message after the AJAX call
+                    about whether or not the contact form was successfully sent-->
+                    <div id="message-area"></div>   
+                    
+                    @using (Ajax.BeginForm("SubmitTopicFeedback", "Help",
+                        new AjaxOptions
+                        {
+                            OnSuccess = "fdbkSuccess",
+                            OnFailure = "fdbkFail"
+                        }, new { id = "idAjaxForm" }))
+                    {
+                        <div class="feedback">
+                            <h5><span>Was this content helpful?</span> <a class="js-yes" style="cursor:pointer;">Yes <i class="fa fa-check"></i></a> <a class="js-no" style="cursor:pointer;">No <i class="fa fa-remove"></i> </a></h5>
+                        
+                            <div class="text-center js-answer-no js-hide">
+                                <p>We're sorry to hear that. Let us know how we can improve</p>
+                                <div class="row addmarginbottom">
+                                    <div class="col-sm-offset-3 col-sm-6 col-sm-offset-3">                                   
+                                        @Html.HiddenFor(m => m.Feedback.FKHelpTopicID, new { @Value = Model.SelectedTopic.PKHelpTopicID })
+                                        @Html.HiddenFor(m => m.Feedback.Helpful, new { @Value = false})
+                                        @Html.TextAreaFor(m => m.Feedback.Comment, new { rows = 10, maxlength = 250, @class = "form-control" })
+                                    </div>
+                                </div>
+                                <p><input type="submit" class="btn btn-default" value="Submit" /></p>
+                            </div>
+
+                        </div>
+
+                        <div class="text-center js-answer-yes js-hide"><br /><br />Thanks for your feedback!</div>
+                    }
+                </div>
+            </div>
+            <div class="col-sm-4">
+                @if (@Model.ParentTitle != null)
+                {
+                    <div class="sidebar-help">
+                        <h3>@Model.InnerTOC[0].Title</h3>
+                        <ul class="sidebar-list">
+                            @if (Model.InnerTOC != null)
+                            {
+                                int i = 0;
+                                bool childOpen = false;
+                                bool activeShowChild = false;
+
+                                foreach (var innerTOCitem in Model.InnerTOC)
+                                {
+                                    if (innerTOCitem.HierarchyLevel == 1)
+                                    {
+                                        if (childOpen == true)
+                                        {
+                                            @Html.Raw("</ul>");
+                                            childOpen = false;
+                                        }
+                                        if (i > 0)
+                                        {
+                                            @Html.Raw("</li>");
+                                        }
+
+                                        @Html.Raw("<li><a href='" + @innerTOCitem.PKHelpContentsID + "' class='active'>" + @innerTOCitem.Title);
+                                        if (innerTOCitem.PKHelpContentsID == Model.SelectedContents.PKHelpContentsID || innerTOCitem.PKHelpContentsID == Model.SelectedContents.FKParentContentsID)
+                                        {
+                                            activeShowChild = true;
+                                            @Html.Raw("<i class='fa fa-caret-down'></i>");
+                                        }
+                                        else
+                                        {
+                                            activeShowChild = false;
+                                            //@Html.Raw("<i class='fa fa-caret-left'></i>");
+                                        }
+
+                                        @Html.Raw("</a> ");
+                                        i++;
+                                    }
+                                    else
+                                    {
+                                        if (activeShowChild == true)
+                                        {
+                                            if (childOpen == false)
+                                            {
+                                                @Html.Raw("<ul class='sidebar-sublist'>");
+                                                childOpen = true;
+                                            }
+
+                                            if (innerTOCitem.PKHelpContentsID == Model.SelectedContents.PKHelpContentsID)
+                                            {
+                                                <li><a href="@innerTOCitem.PKHelpContentsID" class="active">@innerTOCitem.Title</a></li>
+                                            }
+                                            else
+                                            {
+                                                <li><a href="@innerTOCitem.PKHelpContentsID">@innerTOCitem.Title</a></li>
+                                            }
+
+
+                                        }
+                                    }
+                                }
+                            }
+                        </ul>
+                    </div>
+                    }
+
+                        @*<li>
+                <a href="#" class="active">File Menu <i class="fa fa-caret-down"></i></a>
+                <ul class="sidebar-sublist">
+                    <li><a href="#" class="active">New</a></li>
+                    <li><a href="#">Open Project</a></li>
+                    <li><a href="#">Download Project</a></li>
+                    <li><a href="#">Save</a></li>
+                    <li><a href="#">Save As</a></li>
+                    <li><a href="#">Recent Projects</a></li>
+                </ul>
+            </li>
+            <li><a href="#">Edit Menu <i class="fa fa-caret-right"></i></a></li>
+            <li><a href="#">View Menu <i class="fa fa-caret-right"></i></a></li>
+            <li><a href="#">Project Menu <i class="fa fa-caret-right"></i></a></li>
+            <li><a href="#">Build Menu <i class="fa fa-caret-right"></i></a></li>
+            <li><a href="#">Debug Menu <i class="fa fa-caret-right"></i></a></li>
+            <li><a href="#">Tools Menu <i class="fa fa-caret-right"></i></a></li>
+            <li><a href="#">Help Menu <i class="fa fa-caret-right"></i></a></li>*@
+
+                <div class="divider"></div>
+                <div class="sidebar-help">
+                    <h3>Related Articles</h3>
+                    <ul class="sidebar-list">
+                        <li><a href="#">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</a></li>
+                        <li><a href="#">Lorem ipsum dolor sit amet.</a></li>
+                        <li><a href="#">Lorem ipsum dolor sit amet.</a></li>
+                        <li><a href="#">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</a></li>
+                        <li><a href="#">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</a></li>
+                    </ul>
+                </div>
+                <div class="divider"></div>
+                <div class="sidebar-help">
+                    <h3>Related Videos</h3>
+                    <ul class="sidebar-list">
+                        <li><a href="#">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</a></li>
+                        <li><a href="#">Lorem ipsum dolor sit amet.</a></li>
+                        <li><a href="#">Lorem ipsum dolor sit amet.</a></li>
+                        <li><a href="#">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</a></li>
+                        <li><a href="#">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+
+            $('.js-yes').on('click', function () {
+
+                $("#Feedback_Helpful").val(true);
+
+                $('.js-answer-yes.js-hide').removeClass('js-hide');
+                $('.js-yes i').addClass('answer-yes');
+                $('.js-answer-no').addClass('js-hide');
+                $('.js-no i.answer-no').removeClass('answer-no');
+                $('html,body').stop().animate({
+                    scrollTop: $(".js-answer-yes").offset().top - 500
+                });
+
+                $('form#idAjaxForm').trigger('submit');
+            })
+            $('.js-no').on('click', function () {   
+
+                $("#Feedback_Helpful").val(false);
+                $('.js-answer-no.js-hide').removeClass('js-hide animated slideInDown');
+                $('.js-no i').addClass('answer-no');
+                $('.js-answer-yes').addClass('js-hide');
+                $('.js-yes i.answer-yes').removeClass('answer-yes');
+                $('html,body').stop().animate({
+                    scrollTop: $(".js-answer-no").offset().top - 500
+                });
+            })
+            $('.js-open').on('click',function() {
+                $('.js-open-project.js-hide').removeClass('js-hide');
+
+                $('.js-file-new').addClass('js-hide');
+                $('.sidebar-sublist .js-open').addClass('active');
+                $('.sidebar-sublist .js-new.active').removeClass('active');
+
+            })
+            $('.js-new').on('click',function() {
+                $('.js-open-project').addClass('js-hide');
+                $('.js-file-new.js-hide').removeClass('js-hide');
+                $('.sidebar-sublist .js-open.active').removeClass('active');
+                $('.sidebar-sublist .js-new').addClass('active');
+            })
+        });
+
+        function fdbkSuccess(response) {
+            $('.js-answer-yes.js-hide').removeClass('js-hide');
+            $(".feedback").hide();
+        }
+        function fdbkFail(response) {
+            alert("Error occured.");
+        }
+    </script>
